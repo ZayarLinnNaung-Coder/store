@@ -1,0 +1,37 @@
+package devz.assessment.store.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
+@Configuration
+public class OpenApiConfig {
+    
+    @Bean
+    public OpenAPI merchantStoreOpenAPI() {
+        Server localServer = new Server();
+        localServer.setUrl("http://localhost:8080");
+        localServer.setDescription("Local Development Server");
+        
+        Contact contact = new Contact();
+        contact.setName("API Support");
+        contact.setEmail("support@merchantstore.com");
+        
+        Info info = new Info()
+            .title("Merchant Store Location API")
+            .version("1.0.0")
+            .description("REST API for finding nearby merchant stores based on geolocation. " +
+                "Uses Haversine formula to calculate distances between coordinates.")
+            .contact(contact)
+            .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT"));
+        
+        return new OpenAPI().info(info).servers(List.of(localServer));
+    }
+
+}
